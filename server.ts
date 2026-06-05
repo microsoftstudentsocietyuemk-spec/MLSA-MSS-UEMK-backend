@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import { createServer as createViteServer } from 'vite';
 import mongoose from 'mongoose';
 import nodemailer from 'nodemailer';
 import { GoogleGenAI } from '@google/genai';
