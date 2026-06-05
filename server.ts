@@ -647,6 +647,27 @@ function checkAdminAuth(req: express.Request, res: express.Response, next: expre
   }
 }
 
+// ==========================================
+// ROOT ENDPOINT & HEALTH CHECK
+// ==========================================
+app.get('/', (req, res) => {
+  res.json({
+    service: 'MLSA MSS UEMK Backend API',
+    status: 'operational',
+    version: '1.0.0',
+    endpoints: {
+      data: '/api/data',
+      settings: '/api/settings',
+      team: '/api/team',
+      events: '/api/events',
+      gallery: '/api/gallery',
+      projects: '/api/projects',
+      contact: '/api/contact',
+      join: '/api/join'
+    }
+  });
+});
+
 // Portal settings API endpoints
 app.get('/api/settings', async (req, res) => {
   try {
