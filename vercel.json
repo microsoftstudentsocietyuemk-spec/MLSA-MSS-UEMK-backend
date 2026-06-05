@@ -1,15 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "env": {
-    "MONGODB_URI": "@MONGODB_URI",
-    "GEMINI_API_KEY": "@GEMINI_API_KEY",
-    "SMTP_HOST": "@SMTP_HOST",
-    "SMTP_PORT": "@SMTP_PORT",
-    "SMTP_USER": "@SMTP_USER",
-    "SMTP_PASS": "@SMTP_PASS",
-    "SMTP_FROM": "@SMTP_FROM"
-  },
   "functions": {
     "api/index.ts": {
       "maxDuration": 30,
