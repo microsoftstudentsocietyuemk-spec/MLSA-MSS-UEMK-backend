@@ -32,28 +32,48 @@ console.log("[STEP 2] AFTER MONGODB URI");
 mongoose.set('bufferCommands', false);
 
 let isMongoConnected = false;
+
 console.log("[STEP 3] BEFORE MONGOOSE CONNECT");
 
 console.log("[MONGO URI EXISTS]", !!process.env.MONGODB_URI);
 console.log("[MONGO URI LENGTH]", process.env.MONGODB_URI?.length);
 
+console.log(
+  "[STEP 5A] READY STATE BEFORE CONNECT =",
+  mongoose.connection.readyState
+);
+
 console.log("[STEP 5] CONNECT CALL FIRED");
 
+setTimeout(() => {
+  console.log(
+    "[STEP 5B] READY STATE AFTER 15s =",
+    mongoose.connection.readyState
+  );
+}, 15000);
+
 mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 10000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
+  serverSelectionTimeoutMS: 10000,
   socketTimeoutMS: 10000,
 })
-  .then(() => {
-    console.log("[STEP 6] MONGODB CONNECTED");
-    isMongoConnected = true;
-    console.log("[MongoDB Manager] Connected successfully to Cluster0 database!");
-    seedDatabaseFromLocalJSON();
-  })
-  .catch((err) => {
-    console.log("[STEP 6] MONGODB FAILED", err.message);
-    isMongoConnected = false;
-    console.warn("[MongoDB Manager Warning] Database connection failure. Operating with high-reliability local filesystem fallback.", err.message);
-  });
+.then(() => {
+  console.log("[STEP 6] MONGODB CONNECTED");
+  isMongoConnected = true;
+
+  console.log("[MongoDB Manager] Connected successfully to Cluster0 database!");
+
+  seedDatabaseFromLocalJSON();
+})
+.catch((err) => {
+  console.log("[STEP 6] MONGODB FAILED", err.message);
+
+  isMongoConnected = false;
+
+  console.warn(
+    "[MongoDB Manager Warning] Database connection failure.",
+    err.message
+  );
+});
 console.log(
   "[STEP 4]",
   "URI_EXISTS=",
