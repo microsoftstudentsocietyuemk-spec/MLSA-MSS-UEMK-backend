@@ -41,6 +41,7 @@ mongoose.connect(MONGODB_URI, {
   serverSelectionTimeoutMS: 10000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
   socketTimeoutMS: 10000,
 })
+  console.log("[STEP 5] CONNECT CALL FIRED");
   .then(() => {
     isMongoConnected = true;
     console.log("[MongoDB Manager] Connected successfully to Cluster0 database!");
