@@ -55,6 +55,7 @@ setTimeout(() => {
 (async () => {
   try {
     console.log("[STEP 6A] BEFORE AWAIT CONNECT");
+    console.log("[MONGO URI VALUE]", MONGODB_URI);
 
     await mongoose.connect(MONGODB_URI, {
       serverSelectionTimeoutMS: 10000,
