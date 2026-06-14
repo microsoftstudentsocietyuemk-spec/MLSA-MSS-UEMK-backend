@@ -916,13 +916,7 @@ app.get('/api/data', async (req, res) => {
 
         // Keep the Mongo-backed API response stable. Avoid rewriting db.json on every fetch,
         // because Vite watches that file and causes rapid reload loops in development.
-        console.log(
-  "[API DATA]",
-  "Mongo Join Requests:",
-  joinDocs.length,
-  "Mongo Team:",
-  teamDocs.length
-);
+        console.log("HELLO API DATA ROUTE");
         return state;
       },
       () => {
