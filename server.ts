@@ -34,6 +34,9 @@ mongoose.set('bufferCommands', false);
 let isMongoConnected = false;
 console.log("[STEP 3] BEFORE MONGOOSE CONNECT");
 
+console.log("[MONGO URI EXISTS]", !!process.env.MONGODB_URI);
+console.log("[MONGO URI LENGTH]", process.env.MONGODB_URI?.length);
+
 mongoose.connect(MONGODB_URI, {
   serverSelectionTimeoutMS: 10000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
   socketTimeoutMS: 10000,
