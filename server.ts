@@ -451,14 +451,34 @@ async function createAdminNotification(message: string, type: string = 'info') {
  * If MongoDB is not connected (readyState != 1) or individual queries throw time-outs or socket failures,
  * it runs the localFallback immediately with zero network lag.
  */
-async function runDbQuery<T>(mongoFunc: () => Promise<T>, localFallback: () => T | Promise<T>): Promise<T> {
+async function runDbQuery<T>(
+  mongoFunc: () => Promise<T>,
+  localFallback: () => T | Promise<T>
+): Promise<T> {
+
+  console.log(
+    "[DB DEBUG] isMongoConnected =",
+    isMongoConnected,
+    "| readyState =",
+    mongoose.connection.readyState
+  );
+
   if (!isMongoConnected || mongoose.connection.readyState !== 1) {
+    console.log("[DB DEBUG] USING LOCAL FALLBACK");
     return Promise.resolve(localFallback());
   }
+
   try {
+    console.log("[DB DEBUG] USING MONGODB");
     return await mongoFunc();
   } catch (err: any) {
-    console.warn("[Database Manager Warning] Query failed. Falling back to local db.json. Error:", err.message);
+    console.warn(
+      "[Database Manager Warning] Query failed. Falling back to local db.json. Error:",
+      err.message
+    );
+
+    console.log("[DB DEBUG] MONGO QUERY FAILED -> LOCAL FALLBACK");
+
     return Promise.resolve(localFallback());
   }
 }
