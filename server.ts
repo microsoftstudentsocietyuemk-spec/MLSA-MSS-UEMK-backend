@@ -50,7 +50,13 @@ mongoose.connect(MONGODB_URI, {
     isMongoConnected = false;
     console.warn("[MongoDB Manager Warning] Database connection failure. Operating with high-reliability local filesystem fallback.", err.message);
   });
-console.log("[STEP 4] AFTER MONGOOSE CONNECT CALL");
+console.log(
+  "[STEP 4]",
+  "URI_EXISTS=",
+  !!process.env.MONGODB_URI,
+  "URI_LENGTH=",
+  process.env.MONGODB_URI?.length
+);
 
 // Setup event listeners for connection status
 mongoose.connection.on('connected', () => {
