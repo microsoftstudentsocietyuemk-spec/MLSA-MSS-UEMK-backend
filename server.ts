@@ -22,8 +22,10 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // ==========================================
 // MONGODB CONNECTION & SCHEMAS SETUP
 // ==========================================
+console.log("[STEP 1] BEFORE MONGODB URI");
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://microsoftstudentsocietyuemk_db_user:WueN69emGDPhuQ@cluster0.nhzbfpl.mongodb.net/?appName=Cluster0";
+console.log("[STEP 2] AFTER MONGODB URI");
 
 // Disable buffering globally so that queries fail instantly (within ms) if disconnected,
 // allowing us to immediately activate the local files fallback instead of stalling the client for 10 seconds.
