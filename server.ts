@@ -48,17 +48,21 @@ mongoose.connect(MONGODB_URI, {
 // Setup event listeners for connection status
 mongoose.connection.on('connected', () => {
   isMongoConnected = true;
-  console.log("[MongoDB EVENT] CONNECTED");
+  console.log("[MONGO EVENT] CONNECTED");
 });
 
 mongoose.connection.on('disconnected', () => {
   isMongoConnected = false;
-  console.log("[MongoDB EVENT] DISCONNECTED");
+  console.log("[MONGO EVENT] DISCONNECTED");
 });
 
 mongoose.connection.on('error', (err) => {
   isMongoConnected = false;
-  console.error("[MongoDB EVENT] ERROR:", err);
+  console.log("[MONGO EVENT] ERROR", err?.message);
+});
+
+mongoose.connection.on('connecting', () => {
+  console.log("[MONGO EVENT] CONNECTING");
 });
 
 // Schema definitions
