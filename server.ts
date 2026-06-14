@@ -31,8 +31,8 @@ mongoose.set('bufferCommands', false);
 let isMongoConnected = false;
 
 mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 4000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
-  socketTimeoutMS: 5000,
+  serverSelectionTimeoutMS: 30000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
+  socketTimeoutMS: 30000,
 })
   .then(() => {
     isMongoConnected = true;
@@ -47,12 +47,17 @@ mongoose.connect(MONGODB_URI, {
 // Setup event listeners for connection status
 mongoose.connection.on('connected', () => {
   isMongoConnected = true;
+  console.log("[MongoDB EVENT] CONNECTED");
 });
+
 mongoose.connection.on('disconnected', () => {
   isMongoConnected = false;
+  console.log("[MongoDB EVENT] DISCONNECTED");
 });
-mongoose.connection.on('error', () => {
+
+mongoose.connection.on('error', (err) => {
   isMongoConnected = false;
+  console.error("[MongoDB EVENT] ERROR:", err);
 });
 
 // Schema definitions
@@ -457,16 +462,16 @@ async function runDbQuery<T>(
 ): Promise<T> {
 
   console.log(
-    "[DB DEBUG] isMongoConnected =",
-    isMongoConnected,
-    "| readyState =",
-    mongoose.connection.readyState
+    "[DB DEBUG]",
+    "isMongoConnected =", isMongoConnected,
+    "readyState =", mongoose.connection.readyState
   );
 
   if (!isMongoConnected || mongoose.connection.readyState !== 1) {
     console.log("[DB DEBUG] USING LOCAL FALLBACK");
     return Promise.resolve(localFallback());
   }
+
 
   try {
     console.log("[DB DEBUG] USING MONGODB");
