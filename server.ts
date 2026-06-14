@@ -5,6 +5,7 @@ import fs from 'fs';
 import mongoose from 'mongoose';
 import nodemailer from 'nodemailer';
 import { GoogleGenAI } from '@google/genai';
+console.log("SERVER FILE LOADED");
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
 
