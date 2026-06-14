@@ -52,28 +52,28 @@ setTimeout(() => {
   );
 }, 15000);
 
-mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 10000,
-  socketTimeoutMS: 10000,
-})
-.then(() => {
-  console.log("[STEP 6] MONGODB CONNECTED");
-  isMongoConnected = true;
+(async () => {
+  try {
+    console.log("[STEP 6A] BEFORE AWAIT CONNECT");
 
-  console.log("[MongoDB Manager] Connected successfully to Cluster0 database!");
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 10000,
+    });
 
-  seedDatabaseFromLocalJSON();
-})
-.catch((err) => {
-  console.log("[STEP 6] MONGODB FAILED", err.message);
+    console.log("[STEP 6B] CONNECT SUCCESS");
 
-  isMongoConnected = false;
+    isMongoConnected = true;
 
-  console.warn(
-    "[MongoDB Manager Warning] Database connection failure.",
-    err.message
-  );
-});
+    seedDatabaseFromLocalJSON();
+  } catch (err: any) {
+    console.log("[STEP 6C] CONNECT FAILED");
+
+    console.log("[STEP 6D] ERROR =", err?.message);
+
+    isMongoConnected = false;
+  }
+})();
 mongoose.connection.on('connecting', () => {
   console.log('[MONGO EVENT] CONNECTING');
 });
