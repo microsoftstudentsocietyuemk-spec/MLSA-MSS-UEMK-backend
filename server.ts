@@ -35,8 +35,8 @@ let isMongoConnected = false;
 console.log("[STEP 3] BEFORE MONGOOSE CONNECT");
 
 mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 30000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
-  socketTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 10000, // Timeout after 4s (fail-fast) if unable to ping MongoDB Cloud
+  socketTimeoutMS: 10000,
 })
   .then(() => {
     isMongoConnected = true;
@@ -47,6 +47,7 @@ mongoose.connect(MONGODB_URI, {
     isMongoConnected = false;
     console.warn("[MongoDB Manager Warning] Database connection failure. Operating with high-reliability local filesystem fallback.", err.message);
   });
+console.log("[STEP 4] AFTER MONGOOSE CONNECT CALL");
 
 // Setup event listeners for connection status
 mongoose.connection.on('connected', () => {
