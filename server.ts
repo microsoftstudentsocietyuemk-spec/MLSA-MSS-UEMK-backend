@@ -74,6 +74,21 @@ mongoose.connect(MONGODB_URI, {
     err.message
   );
 });
+mongoose.connection.on('connecting', () => {
+  console.log('[MONGO EVENT] CONNECTING');
+});
+
+mongoose.connection.on('connected', () => {
+  console.log('[MONGO EVENT] CONNECTED');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log('[MONGO EVENT] ERROR', err.message);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('[MONGO EVENT] DISCONNECTED');
+});
 console.log(
   "[STEP 4]",
   "URI_EXISTS=",
